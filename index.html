@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AKÉOS | La Rébellion Verte</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap');
+        
+        :root {
+            /* Couleurs extraites du logo */
+            --akeos-green: #4a7c2c; /* Vert principal */
+            --akeos-light: #86b049; /* Vert feuille clair */
+            --akeos-dark: #1b2e11;  /* Vert forêt profond */
+            --dark-bg: #0d120a;     /* Noir organique */
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--dark-bg);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        h1, h2, .font-display {
+            font-family: 'Syncopate', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .text-outline {
+            -webkit-text-stroke: 1px rgba(134, 176, 73, 0.5);
+            color: transparent;
+        }
+
+        .horizontal-container {
+            width: 500vw;
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        .panel {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            position: relative;
+        }
+
+        .custom-cursor {
+            width: 25px;
+            height: 25px;
+            background: var(--akeos-light);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: exclusion;
+            transition: transform 0.15s ease;
+        }
+
+        .grain-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://grainy-gradients.vercel.app/noise.svg');
+            opacity: 0.04;
+            pointer-events: none;
+            z-index: 50;
+        }
+
+        .noise-card {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(134, 176, 73, 0.15);
+        }
+
+        .btn-akeos {
+            background: linear-gradient(135deg, var(--akeos-green), var(--akeos-light));
+            color: white;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .btn-akeos:hover {
+            box-shadow: 0 10px 40px rgba(74, 124, 44, 0.4);
+            transform: translateY(-5px);
+            letter-spacing: 0.2em;
+        }
+
+        .marquee {
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: marquee 25s linear infinite;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .logo-placeholder {
+            filter: drop-shadow(0 0 10px rgba(134, 176, 73, 0.3));
+        }
+
+        @media (max-width: 768px) {
+            .horizontal-container { width: 100%; flex-direction: column; }
+            .panel { height: auto; min-height: 100vh; padding: 3rem 1.5rem; }
+        }
+    </style>
+</head>
+<body class="bg-[#0d120a]">
+
+    <div class="custom-cursor" id="cursor"></div>
+    <div class="grain-overlay"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 w-full z-[100] p-6 flex justify-between items-center mix-blend-difference">
+        <div class="flex items-center gap-3">
+            <div class="w-8 h-8 bg-[#86b049] rounded-full flex items-center justify-center">
+                <i class="fas fa-leaf text-[0.8rem] text-white"></i>
+            </div>
+            <div class="font-display font-bold text-xl tracking-tighter text-white">AKÉOS.</div>
+        </div>
+        <div class="flex gap-10 items-center">
+            <a href="https://whatsapp.com/channel/0029VbCJaPb9hXFB2mFqzf42" target="_blank" class="hidden md:block text-[0.65rem] font-bold tracking-[0.3em] text-white hover:text-[#86b049]">MEMBERS ONLY</a>
+            <div class="w-10 h-10 border border-white/20 rounded-full flex items-center justify-center text-white cursor-pointer group hover:bg-white hover:text-black transition-all">
+               <i class="fas fa-plus transition-transform group-hover:rotate-90"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Progress -->
+    <div class="fixed bottom-0 left-0 h-[2px] bg-gradient-to-r from-[#4a7c2c] to-[#86b049] z-[100] transition-all duration-300" id="progress-bar"></div>
+
+    <div class="horizontal-container" id="master-container">
+        
+        <!-- SECTION 1: L'ORIGINE -->
+        <section class="panel bg-[#0d120a]">
+            <div class="absolute inset-0 flex items-center justify-center opacity-5 pointer-events-none">
+                <h2 class="text-[25vw] font-display font-black text-[#86b049]">UPCYCLE</h2>
+            </div>
+            <div class="z-10 max-w-5xl">
+                <p class="text-[#86b049] font-bold tracking-[0.5em] mb-6 text-xs flex items-center gap-4">
+                    <span class="w-10 h-[1px] bg-[#86b049]"></span> CASABLANCA CREATIVE STUDIO
+                </p>
+                <h1 class="text-6xl md:text-[8rem] font-display font-black leading-[0.85] mb-10">
+                    Hacker la <br><span class="text-outline">Mode.</span>
+                </h1>
+                <p class="text-lg text-gray-400 max-w-lg mb-12 leading-relaxed font-light">
+                    Inspiré par la nature, guidé par l'aiguille. Nous transformons les surplus en pièces uniques. Durable, accessible, radical.
+                </p>
+                <div class="flex flex-wrap gap-6">
+                    <button class="btn-akeos px-10 py-5 font-bold uppercase text-[0.7rem] tracking-widest">
+                        Explorer le Drop
+                    </button>
+                    <button class="border border-white/20 px-10 py-5 font-bold uppercase text-[0.7rem] tracking-widest hover:bg-white hover:text-black transition-all">
+                        Notre Manifeste
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 2: LE CONTRASTE -->
+        <section class="panel bg-[#1b2e11] text-white overflow-hidden">
+            <div class="grid md:grid-cols-2 gap-20 items-center w-full max-w-6xl relative">
+                <div class="relative">
+                    <div class="text-[12rem] font-display font-black text-white/5 absolute -top-20 -left-10 select-none">VS</div>
+                    <h2 class="text-5xl font-display font-black mb-8 relative z-10">L'alternative <br><span class="text-[#86b049]">logique.</span></h2>
+                    <p class="text-lg text-white/70 mb-10">Pourquoi la mode éthique devrait-elle être un luxe ? Nous coupons les intermédiaires, pas la qualité.</p>
+                    
+                    <div class="flex items-center gap-6 p-6 bg-black/30 border-l-4 border-[#86b049]">
+                        <div class="text-4xl font-bold text-[#86b049]">150DH</div>
+                        <div class="text-xs uppercase tracking-widest text-white/50">Prix moyen Akéos<br>vs 900DH+ (Premium)</div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 gap-4">
+                    <div class="noise-card p-8 group hover:border-[#86b049] transition-colors">
+                        <h4 class="font-display font-bold text-[#86b049] mb-2">Impact Direct</h4>
+                        <p class="text-sm text-gray-400 italic">"Moins de déchets, plus de style."</p>
+                    </div>
+                    <div class="noise-card p-8 group hover:border-[#86b049] transition-colors">
+                        <h4 class="font-display font-bold text-[#86b049] mb-2">Transparence</h4>
+                        <p class="text-sm text-gray-400 italic">"Provenance marocaine, transformation locale."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 3: L'ÉCONOMIE CIRCULAIRE -->
+        <section class="panel bg-[#0d120a]">
+            <div class="w-full max-w-7xl">
+                <div class="flex justify-between items-end mb-16">
+                    <h2 class="text-4xl md:text-6xl font-display font-black">L'écosystème</h2>
+                    <p class="text-[#86b049] font-bold text-xs tracking-widest hidden md:block">SCROLL TO DISCOVER —></p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- ATELIERS -->
+                    <div class="relative overflow-hidden group h-[60vh] border border-white/5">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent z-10"></div>
+                        <div class="absolute bottom-10 left-10 z-20 transition-transform group-hover:-translate-y-4">
+                            <span class="text-[#86b049] text-xs font-bold tracking-[0.3em] mb-2 block">01. LEARN</span>
+                            <h3 class="text-3xl font-display font-bold mb-4">ATELIERS DIY</h3>
+                            <p class="text-gray-400 text-sm max-w-[200px] opacity-0 group-hover:opacity-100 transition-opacity">Apprenez à réparer et customiser vos pièces avec nos experts.</p>
+                        </div>
+                        <div class="absolute top-10 right-10 z-20">
+                            <i class="fas fa-plus text-[#86b049]"></i>
+                        </div>
+                    </div>
+                    <!-- REPRISE -->
+                    <div class="relative overflow-hidden group h-[60vh] border border-white/5 bg-[#1b2e11]/20">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent z-10"></div>
+                        <div class="absolute bottom-10 left-10 z-20 transition-transform group-hover:-translate-y-4">
+                            <span class="text-[#86b049] text-xs font-bold tracking-[0.3em] mb-2 block">02. CIRCLE</span>
+                            <h3 class="text-3xl font-display font-bold mb-4">PROGRAMME REPRISE</h3>
+                            <p class="text-gray-400 text-sm max-w-[200px] opacity-0 group-hover:opacity-100 transition-opacity">Échangez vos anciens vêtements contre des crédits Akéos.</p>
+                        </div>
+                    </div>
+                    <!-- SHOP -->
+                    <div class="relative overflow-hidden group h-[60vh] border border-[#86b049]/30 bg-[#4a7c2c]/10">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent z-10"></div>
+                        <div class="absolute bottom-10 left-10 z-20 transition-transform group-hover:-translate-y-4">
+                            <span class="text-[#86b049] text-xs font-bold tracking-[0.3em] mb-2 block">03. WEAR</span>
+                            <h3 class="text-3xl font-display font-bold mb-4">SHOP CURATED</h3>
+                            <p class="text-gray-400 text-sm max-w-[200px] opacity-0 group-hover:opacity-100 transition-opacity">Une sélection de pièces uniques upcyclées chaque mois.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 4: DATA & IMPACT -->
+        <section class="panel bg-[#86b049] text-[#0d120a]">
+             <div class="absolute top-0 left-0 w-full bg-[#0d120a] py-3 overflow-hidden">
+                <div class="marquee font-display font-bold text-[#86b049] text-[0.6rem] tracking-[0.6em]">
+                    TRANSFORMING WASTE INTO FASHION — 2.5KG CO2 SAVED PER ITEM — JOIN THE GREEN REBELLION —
+                    TRANSFORMING WASTE INTO FASHION — 2.5KG CO2 SAVED PER ITEM — JOIN THE GREEN REBELLION —
+                </div>
+            </div>
+            <div class="max-w-6xl w-full grid md:grid-cols-2 gap-20 items-center mt-10">
+                <div>
+                    <h2 class="text-6xl font-display font-black mb-8 leading-tight">L'impact en <span class="text-white">temps réel.</span></h2>
+                    <div class="space-y-12">
+                        <div>
+                            <span class="block text-8xl font-display font-black" id="co2-val">15.4</span>
+                            <span class="uppercase tracking-[0.4em] font-bold text-sm">Tonnes de CO₂ Évitées</span>
+                        </div>
+                        <div class="flex gap-12">
+                            <div>
+                                <span class="block text-4xl font-display font-black">6K+</span>
+                                <span class="uppercase tracking-widest text-[0.6rem] font-bold opacity-70">Pièces Sauvées</span>
+                            </div>
+                            <div>
+                                <span class="block text-4xl font-display font-black">2.5K</span>
+                                <span class="uppercase tracking-widest text-[0.6rem] font-bold opacity-70">Membres Actifs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-[#0d120a] p-12 text-white transform md:rotate-3 shadow-2xl">
+                    <i class="fas fa-quote-left text-4xl text-[#86b049] mb-6"></i>
+                    <p class="text-2xl font-medium leading-relaxed mb-8">"Notre mission n'est pas seulement de vendre des vêtements, mais de changer la façon dont nous les consommons au Maroc."</p>
+                    <span class="block font-display font-bold text-[#86b049]">Hanae Mahrach</span>
+                    <span class="text-xs uppercase tracking-widest opacity-50">Fondatrice AKÉOS</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SECTION 5: CALL TO ACTION -->
+        <section class="panel bg-[#0d120a]">
+            <div class="w-full max-w-4xl text-center">
+                <div class="mb-12 inline-block p-4 border border-[#86b049]/30 rounded-full">
+                    <div class="w-20 h-20 bg-gradient-to-br from-[#4a7c2c] to-[#86b049] rounded-full flex items-center justify-center logo-placeholder">
+                        <i class="fas fa-needle text-3xl text-white"></i>
+                    </div>
+                </div>
+                <h2 class="text-5xl md:text-8xl font-display font-black mb-10 leading-none">Enter the <br><span class="text-outline">Circle.</span></h2>
+                
+                <div class="flex flex-col md:flex-row gap-6 justify-center items-center">
+                    <a href="https://whatsapp.com/channel/0029VbCJaPb9hXFB2mFqzf42" target="_blank" class="btn-akeos w-full md:w-auto px-12 py-6 rounded-full font-display font-bold text-xs tracking-widest flex items-center justify-center gap-4">
+                        <i class="fab fa-whatsapp text-lg"></i> REJOINDRE LE CANAL
+                    </a>
+                    <a href="mailto:best.ecom01@gmail.com" class="text-white/50 hover:text-[#86b049] font-bold uppercase text-[0.65rem] tracking-[0.3em] transition-colors">
+                        S'INSCRIRE AUX ATELIERS —>
+                    </a>
+                </div>
+
+                <div class="mt-32 grid md:grid-cols-3 gap-10 text-[0.6rem] text-gray-600 uppercase tracking-[0.3em] border-t border-white/5 pt-10">
+                    <div class="text-left">©2024 AKÉOS STUDIO</div>
+                    <div class="flex justify-center gap-6">
+                        <a href="#" class="hover:text-white transition-colors">Instagram</a>
+                        <a href="#" class="hover:text-white transition-colors">TikTok</a>
+                    </div>
+                    <div class="text-right">Casablanca, Maroc</div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <script>
+        // Custom Cursor Movement
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            gsap.to(cursor, {
+                x: e.clientX,
+                y: e.clientY,
+                duration: 0.1
+            });
+        });
+
+        // Cursor scaling
+        document.querySelectorAll('a, button, .group, .noise-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                gsap.to(cursor, { scale: 3, backgroundColor: '#86b049' });
+            });
+            el.addEventListener('mouseleave', () => {
+                gsap.to(cursor, { scale: 1, backgroundColor: '#86b049' });
+            });
+        });
+
+        // GSAP Initialization
+        gsap.registerPlugin(ScrollTrigger);
+
+        if (window.innerWidth > 768) {
+            let sections = gsap.utils.toArray(".panel");
+            
+            gsap.to(sections, {
+                xPercent: -100 * (sections.length - 1),
+                ease: "none",
+                scrollTrigger: {
+                    trigger: ".horizontal-container",
+                    pin: true,
+                    scrub: 0.8,
+                    snap: 1 / (sections.length - 1),
+                    end: () => "+=" + document.querySelector(".horizontal-container").offsetWidth,
+                    onUpdate: (self) => {
+                        document.getElementById('progress-bar').style.width = (self.progress * 100) + "%";
+                    }
+                }
+            });
+        }
+
+        // Counter Animation for CO2
+        gsap.from("#co2-val", {
+            scrollTrigger: {
+                trigger: "#co2-val",
+                start: "left center"
+            },
+            innerHTML: 0,
+            duration: 2.5,
+            ease: "power2.out",
+            snap: { innerHTML: 0.1 }
+        });
+
+        // Random Impact Notifications
+        const notifs = [
+            "✨ Nouveau drop DIY disponible !",
+            "🌿 +2.5kg CO2 économisés à l'instant",
+            "📱 Le groupe WhatsApp s'agrandit",
+            "🧵 Atelier samedi : Complet !"
+        ];
+
+        function spawnNotification() {
+            const text = notifs[Math.floor(Math.random() * notifs.length)];
+            const div = document.createElement('div');
+            div.className = 'fixed top-10 right-10 bg-white text-black px-6 py-3 font-bold text-[0.6rem] tracking-[0.2em] uppercase z-[200] border-l-4 border-[#4a7c2c] shadow-2xl';
+            div.innerText = text;
+            document.body.appendChild(div);
+
+            gsap.fromTo(div, { x: 100, opacity: 0 }, { x: 0, opacity: 1, duration: 0.6 });
+            gsap.to(div, { x: 100, opacity: 0, delay: 4, duration: 0.6, onComplete: () => div.remove() });
+        }
+
+        setTimeout(() => setInterval(spawnNotification, 12000), 5000);
+    </script>
+</body>
+</html>
